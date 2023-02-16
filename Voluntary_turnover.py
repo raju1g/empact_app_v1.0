@@ -110,7 +110,6 @@ try:
     # Plotting the retention rate
     import plotly.graph_objects as go
     import plotly.express as px
-    from bubbly.bubbly import bubbleplot
 
     fig = go.Figure()
     fig.add_trace(go.Bar(
