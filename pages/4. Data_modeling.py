@@ -8,10 +8,6 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 import matplotlib as mpl
 import plotly.graph_objs as go
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
-from sklearn import metrics
-from sklearn.metrics import classification_report
 
 # The code below is for the title and logo for this page.
 st.set_page_config(page_title="EmpAct Cooperative App (beta)", page_icon="📊")
