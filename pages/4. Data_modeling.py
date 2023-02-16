@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 import matplotlib as mpl
 import plotly.graph_objs as go
+import statsmodels.api as sm
 
 # The code below is for the title and logo for this page.
 st.set_page_config(page_title="EmpAct Cooperative App (beta)", page_icon="📊")
