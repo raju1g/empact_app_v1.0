@@ -78,7 +78,6 @@ X = df[feature_cols]
 x1 = df["Tenure (in years)"]
 y1 = df["score"]
 y = df["continuation"]
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=16)
 
 with st.expander("Show the `regression` dataframe"):
     st.write(df)
