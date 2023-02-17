@@ -14,7 +14,7 @@ import statsmodels.api as sm
 st.set_page_config(page_title="EmpAct Cooperative App (beta)", page_icon="📊")
 
 
-st.title("Analyzing employee turnover using linear regression")
+st.title("`Analyzing employee turnover using linear regression`")
 
 st.write("")
 
