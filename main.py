@@ -6,8 +6,6 @@ st.set_page_config(page_title="EmpAct Cooperative App (beta)", page_icon="📊")
 
 st.title("`Preface`")
 
-st.write("")
-
 st.markdown("""
 
     This report is developed using [Streamlit](https://streamlit.io/) and is meant for demonstration purposes only.
@@ -15,7 +13,8 @@ st.markdown("""
 """
 )
 
-st.write("Scope")
+st.subheader("Scope")
+
 
 st.markdown("""
 
@@ -29,7 +28,8 @@ st.markdown("""
     
 """)
 
-st.write("Approch")
+
+st.subheader("Approach")
 
 st.markdown("""
 
@@ -40,5 +40,26 @@ st.markdown("""
 
 """)
 
-st.write("")
 
+st.subheader("Challenge")
+
+st.markdown("""
+
+    XYZ Oy experiences a significantly high turnover of employees within 1-3 years of recruiting compared to the industry standard (see page 1. Voluntary turnover). 
+    The organisation also failed to hold on to a majority of the recruited talent within 1-3 years of recruiting.  
+    
+""")
+
+st.subheader("Recommendations")
+
+st.markdown("""
+
+   Clearly, XYZ fails to motivate and engage (see page 4. Data modeling) a majority of recruited employees during the onboarding phase. As such, employees leave the the organisation within 3 years 
+   citing better career, growth and benefit opportunities elsewhere. Onboarding is affected due to the limitations in HR team. This not only leads to disruptions in workflows but also costs the company in terms of turnover expenses. 
+   The following recommendations were made to XYZ based on this limited analysis:
+   
+   - `Expansion of the HR team with specialist roles`
+   - `Development of onboarding strategy`
+   - `Employee engagement through career development plans`
+
+""")
