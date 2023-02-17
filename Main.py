@@ -3,7 +3,7 @@ import streamlit as st
 # The code below is for the title and logo for this page.
 st.set_page_config(page_title="EmpAct Cooperative App (beta)", page_icon="📊")
 
-st.title("Talent management audit (2022-23) - XYZ Oy")
+st.title("Talent management audit - XYZ Oy")
 
 st.subheader("Preface")
 
