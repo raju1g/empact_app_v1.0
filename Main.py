@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import itertools
+from itertools import product
 from dataclasses import dataclass
 from typing import List
 import random
@@ -36,7 +37,7 @@ st.subheader("Preface")
 @dataclass(frozen=True)
 class Variant:
     gender: str
-    type: str
+    typ: str
     reason: str
     benefits: str
 
@@ -92,7 +93,7 @@ with row00_0:
     container = st.container()
     all = st.checkbox("All", value=True)
     if all:
-        type = container.multiselect(
+        typ = container.multiselect(
             "Type:",
             st.session_state.type_use_input,
             default=st.session_state.type_use_input,
@@ -113,7 +114,7 @@ with row00_0:
             default=st.session_state.ben_use_input,
         )
     else:
-        type = container.multiselect(
+        typ = container.multiselect(
             "Type:",
             st.session_state.type_use_input,
         )
@@ -130,10 +131,10 @@ with row00_0:
             st.session_state.ben_use_input,
         )
 
-sel = [gender, type, reason, benefits]
+sel = [gender, typ, reason, benefits]
 variants = list(itertools.product(*sel))
 variants: List[Variant] = [
-    Variant(gender=i[0], reason=i[1], type=i[2], benefits=i[3])
+    Variant(gender=i[0], reason=i[1], typ=i[2], benefits=i[3])
     for i in variants
 ]
 totals = {}
@@ -145,7 +146,7 @@ for variant in variants:
     filtered_df = df[
         (df["gender"] == variant.gender)
         & (df["reason"] == variant.reason)
-        & (df["type"] == variant.type)
+        & (df["type"] == variant.typ)
         & (df["benefits"] == variant.benefits)
         ]
 
