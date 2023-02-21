@@ -32,16 +32,6 @@ st.set_page_config(page_title="EmpAct Cooperative App",
                    page_icon="🔮")
 
 
-#tabs = ["Main", "About"]
-#page = st.sidebar.radio("Tabs", tabs)
-
-
-@st.cache(persist=False,
-          allow_output_mutation=True,
-          suppress_st_warning=True,
-          show_spinner=True)
-
-
 @st.experimental_memo
 def load_data():
 
