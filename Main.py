@@ -62,7 +62,7 @@ def load_data():
     df = df.drop(["stag"], axis=1)
     df['years_tenure'] = df["years_tenure"].round(1)
     return df
-
+df = load_data()
 st.dataframe(df, use_container_width=True)
   #try:
 kmf = KaplanMeierFitter()
