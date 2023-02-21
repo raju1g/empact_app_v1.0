@@ -63,7 +63,7 @@ def load_data():
     df['years_tenure'] = df["years_tenure"].round(1)
     return df
 
-df.head()
+st.dataframe(df, use_container_width=True)
   #try:
 kmf = KaplanMeierFitter()
 fig, ax = plt.subplots(figsize=(10, 5), dpi=500)
