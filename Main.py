@@ -64,47 +64,47 @@ def load_data():
     return df
   
   #try:
-    kmf = KaplanMeierFitter()
-    fig, ax = plt.subplots(figsize=(10, 5), dpi=500)
+kmf = KaplanMeierFitter()
+fig, ax = plt.subplots(figsize=(10, 5), dpi=500)
 
       ## Employees with coaching
 
-    cohort1 = df[df["type"] == "voluntary"]
+cohort1 = df[df["type"] == "voluntary"]
 
-    kmf.fit(durations=cohort1["years_tenure"],
-            event_observed=cohort1["event"],
-            label='Voluntary turnover')
+kmf.fit(durations=cohort1["years_tenure"],
+        event_observed=cohort1["event"],
+        label='Voluntary turnover')
 
-    kmf.plot_survival_function(ax=ax, ci_show=False)
+kmf.plot_survival_function(ax=ax, ci_show=False)
 
       ## Employees without coaching
 
-    cohort2 = df[df["type"] != "voluntary"]
+cohort2 = df[df["type"] != "voluntary"]
 
-    kmf.fit(durations=cohort2["years_tenure"],
-            event_observed=cohort2["event"],
-            label='Involuntary turnover')
+kmf.fit(durations=cohort2["years_tenure"],
+        event_observed=cohort2["event"],
+        label='Involuntary turnover')
 
       ## Adding a few details to the plot
 
-    kmf.plot_survival_function(ax=ax, ci_show=False)
+kmf.plot_survival_function(ax=ax, ci_show=False)
 
-    ax.set_ylabel("Employee survival rate")
-    ax.set_xlabel("Timeline - years")
+ax.set_ylabel("Employee survival rate")
+ax.set_xlabel("Timeline - years")
 
-    plt.text(5.15, 0.7, '50% voluntary turnover', size=10, color='lightblue')
-    plt.text(5.15, 0.66, 'after 5 years', size=10, color='lightblue')
-    plt.text(-0.5, 0.3, '50% involuntary turnover', size=10, color='orange')
-    plt.text(-0.5, 0.26, 'after 3.5 years', size=10, color='orange')
-    plt.axvline(x=4.9, color='lightblue', linestyle='--')
-    plt.axvline(x=3.5, color='orange', linestyle='--')
+plt.text(5.15, 0.7, '50% voluntary turnover', size=10, color='lightblue')
+plt.text(5.15, 0.66, 'after 5 years', size=10, color='lightblue')
+plt.text(-0.5, 0.3, '50% involuntary turnover', size=10, color='orange')
+plt.text(-0.5, 0.26, 'after 3.5 years', size=10, color='orange')
+plt.axvline(x=4.9, color='lightblue', linestyle='--')
+plt.axvline(x=3.5, color='orange', linestyle='--')
 
-    plt.legend(fontsize=9)
+plt.legend(fontsize=9)
 
-    for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] +
-                 ax.get_xticklabels() + ax.get_yticklabels()):
-        item.set_fontsize(10)
-    fig
+for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] +
+             ax.get_xticklabels() + ax.get_yticklabels()):
+    item.set_fontsize(10)
+fig
   #except IndexError:
   #    st.warning("This is throwing an exception, bear with us!")
     
