@@ -90,15 +90,15 @@ with col2:
         )
         df = df[df["type"].isin(multiselect)]
 
-    elif MetricSlider01 == "reasons":
+    elif MetricSlider01 == "reason":
         col_one_list = (
-            df_new_slider_01["reasons"].drop_duplicates().tolist()
+            df_new_slider_01["reason"].drop_duplicates().tolist()
         )
         multiselect = st.multiselect(
             "Select the value(s)", col_one_list, ['Better salary and benefits','Lack of career growth opportunities', 'Poor management and work culture', 'Unhappy with job responsibilities', 'Violation of company policies and procedures', 'Poor performance and attendance', 'Conflict with colleagues and manager', 'Misconduct and inappropriate behavior']
         )
         df = df[
-            df["reasons"].isin(multiselect)
+            df["reason"].isin(multiselect)
         ]
 
 try:
@@ -142,6 +142,6 @@ try:
     for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] +
                  ax.get_xticklabels() + ax.get_yticklabels()):
         item.set_fontsize(10)
-
+    fig
 except IndexError:
     st.warning("This is throwing an exception, bear with us!")
