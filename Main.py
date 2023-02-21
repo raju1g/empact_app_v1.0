@@ -48,6 +48,7 @@ def load_data():
     # Load data
     df = pd.read_csv("datasets/turnover.csv", engine="python", encoding="ISO-8859-1")
     df[["cost"]] = np.random.randint(10000, size=(1129, 1)).astype(float)
+    df[["year"]] = np.random.randint([2021, 2022], size=(1129, 1)).astype(int)
     df = df.drop(["traffic"], axis=1)
     df = df.drop(["head_gender"], axis=1)
     df = df.drop(["greywage"], axis=1)
@@ -142,16 +143,16 @@ totals = {}
 for df in df.items():
     filtered_dfs = []
 
-for variant in variants:
-    filtered_df = df[
-        #(df["gender"] == variant.gender)
-        (df["reason"] == variant.reason)
-        & (df["type"] == variant.typ)
-        & (df["benefits"] == variant.benefits)
-        ]
+    for variant in variants:
+        filtered_df = df[
+            (df["gender"] == variant.gender)
+            (df["reason"] == variant.reason)
+            & (df["type"] == variant.typ)
+            & (df["benefits"] == variant.benefits)
+            ]
 
-    if not filtered_df.empty:
-        filtered_dfs.append(filtered_df)
+        if not filtered_df.empty:
+            filtered_dfs.append(filtered_df)
 
 try:
     kmf = KaplanMeierFitter()
