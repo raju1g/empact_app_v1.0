@@ -33,7 +33,7 @@ st.subheader("Preface")
 def load_data():
 
     # Load data
-    df = pd.read_csv("turnover.csv", engine="python", encoding="ISO-8859-1")
+    df = pd.read_csv("datasets/turnover.csv", engine="python", encoding="ISO-8859-1")
     df[["cost"]] = np.random.randint(10000, size=(1129, 1)).astype(float)
     df = df.drop(["traffic"], axis=1)
     df = df.drop(["head_gender"], axis=1)
