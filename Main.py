@@ -144,8 +144,8 @@ for df in df.items():
 
 for variant in variants:
     filtered_df = df[
-        (df["gender"] == variant.gender)
-        & (df["reason"] == variant.reason)
+        #(df["gender"] == variant.gender)
+        (df["reason"] == variant.reason)
         & (df["type"] == variant.typ)
         & (df["benefits"] == variant.benefits)
         ]
