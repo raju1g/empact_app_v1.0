@@ -73,9 +73,7 @@ def load_data():
     df['years_tenure'] = df["years_tenure"].round(1)
     return df
 
-
-if tabs == 'Main':
-    
+  if tabs == 'Main':
     try:
       kmf = KaplanMeierFitter()
       fig, ax = plt.subplots(figsize=(10, 5), dpi=500)
@@ -118,7 +116,7 @@ if tabs == 'Main':
                    ax.get_xticklabels() + ax.get_yticklabels()):
           item.set_fontsize(10)
       fig
-  except IndexError:
+    except IndexError:
       st.warning("This is throwing an exception, bear with us!")
     
 
