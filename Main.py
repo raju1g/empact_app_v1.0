@@ -32,8 +32,8 @@ st.set_page_config(page_title="EmpAct Cooperative App",
                    page_icon="🔮")
 
 
-tabs = ["Main", "About"]
-page = st.sidebar.radio("Tabs", tabs)
+#tabs = ["Main", "About"]
+#page = st.sidebar.radio("Tabs", tabs)
 
 
 @st.cache(persist=False,
@@ -72,9 +72,8 @@ def load_data():
     df = df.drop(["stag"], axis=1)
     df['years_tenure'] = df["years_tenure"].round(1)
     return df
-
-  if tabs == 'Main':
-    try:
+  
+  try:
       kmf = KaplanMeierFitter()
       fig, ax = plt.subplots(figsize=(10, 5), dpi=500)
 
@@ -116,7 +115,7 @@ def load_data():
                    ax.get_xticklabels() + ax.get_yticklabels()):
           item.set_fontsize(10)
       fig
-    except IndexError:
+  except IndexError:
       st.warning("This is throwing an exception, bear with us!")
     
 
