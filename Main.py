@@ -73,7 +73,7 @@ def load_data():
     df['years_tenure'] = df["years_tenure"].round(1)
     return df
   
-  try:
+  #try:
       kmf = KaplanMeierFitter()
       fig, ax = plt.subplots(figsize=(10, 5), dpi=500)
 
@@ -115,8 +115,8 @@ def load_data():
                    ax.get_xticklabels() + ax.get_yticklabels()):
           item.set_fontsize(10)
       fig
-  except IndexError:
-      st.warning("This is throwing an exception, bear with us!")
+  #except IndexError:
+  #    st.warning("This is throwing an exception, bear with us!")
     
 
 
