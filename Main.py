@@ -75,17 +75,17 @@ def load_data():
 df = load_data()
 
 # Initialization
-if "gen_use_input" not in st.session_state:
-    st.session_state.gen_use_input = df["type"].unique()
+if "type_use_input" not in st.session_state:
+    st.session_state.type_use_input = df["type"].unique()
 
 if "reg_use_input" not in st.session_state:
     st.session_state.reg_use_input = df["reason"].unique()
 
-if "plays_use_input" not in st.session_state:
-    st.session_state.plays_use_input = df["gender"].unique()
-    
-if "play2_use_input" not in st.session_state:
-    st.session_state.plays_use_input = df["benefits"].unique()
+if "gen_use_input" not in st.session_state:
+    st.session_state.gen_use_input = df["gender"].unique()
+
+if "ben_use_input" not in st.session_state:
+    st.session_state.ben_use_input = df["benefits"].unique()
 
 row00_0, row00_1, row00_2 = st.columns([0.5, 0.25, 1])
 with row00_0:
@@ -94,13 +94,13 @@ with row00_0:
     if all:
         type = container.multiselect(
             "Type:",
-            st.session_state.gen_use_input,
-            default=st.session_state.gen_use_input,
+            st.session_state.type_use_input,
+            default=st.session_state.type_use_input,
         )
         gender = container.multiselect(
             "Gender:",
-            st.session_state.plays_use_input,
-            default=st.session_state.plays_use_input,
+            st.session_state.gen_use_input,
+            default=st.session_state.gen_use_input,
         )
         reason = container.multiselect(
             "Reason:",
@@ -109,21 +109,25 @@ with row00_0:
         )
         benefits = container.multiselect(
             "Benefits:",
-            st.session_state.plays2_use_input,
-            default=st.session_state.plays2_use_input,
+            st.session_state.ben_use_input,
+            default=st.session_state.ben_use_input,
         )
     else:
+        type = container.multiselect(
+            "Type:",
+            st.session_state.type_use_input,
+        )
         gender = container.multiselect(
-            "Sukupuoli:",
+            "Gender:",
             st.session_state.gen_use_input,
         )
-        plays = container.multiselect(
-            "Koulutustaso:",
-            st.session_state.plays_use_input,
-        )
-        region = container.multiselect(
-            "Alue:",
+        reason = container.multiselect(
+            "Reason:",
             st.session_state.reg_use_input,
+        )
+        benefits = container.multiselect(
+            "Benefits:",
+            st.session_state.ben_use_input,
         )
 
 sel = [gender, type, reason, benefits]
