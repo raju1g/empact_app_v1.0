@@ -62,14 +62,15 @@ def load_data():
     df = df.drop(["stag"], axis=1)
     df['years_tenure'] = df["years_tenure"].round(1)
     return df
-  
+
+df.head()
   #try:
 kmf = KaplanMeierFitter()
 fig, ax = plt.subplots(figsize=(10, 5), dpi=500)
 
       ## Employees with coaching
 
-cohort1 = df[df["type"] == "voluntary"]
+cohort1 = df[df['type'] == "voluntary"]
 
 kmf.fit(durations=cohort1["years_tenure"],
         event_observed=cohort1["event"],
@@ -79,7 +80,7 @@ kmf.plot_survival_function(ax=ax, ci_show=False)
 
       ## Employees without coaching
 
-cohort2 = df[df["type"] != "voluntary"]
+cohort2 = df[df['type'] != "voluntary"]
 
 kmf.fit(durations=cohort2["years_tenure"],
         event_observed=cohort2["event"],
