@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import itertools
+from dataclasses import dataclass
+from typing import List
 import random
 from lifelines import KaplanMeierFitter
 
@@ -28,6 +31,15 @@ st.set_page_config(page_title="EmpAct Cooperative App (beta)", page_icon="📊")
 st.title("Talent management audit (2022-23) - XYZ Oy")
 
 st.subheader("Preface")
+
+
+@dataclass(frozen=True)
+class Variant:
+    gender: str
+    type: str
+    reason: str
+    benefits: str
+
 
 @st.experimental_memo
 def load_data():
@@ -62,44 +74,79 @@ def load_data():
 
 df = load_data()
 
-with st.expander("Show the `Employee turnover` dataframe"):
-    st.write(df)
+# Initialization
+if "gen_use_input" not in st.session_state:
+    st.session_state.gen_use_input = df["type"].unique()
 
-df_new_slider_01 = df[["type", "reason", "gender", "benefits"]]
-new_slider_01 = [col for col in df_new_slider_01]
+if "reg_use_input" not in st.session_state:
+    st.session_state.reg_use_input = df["reason"].unique()
 
-st.write("")
+if "plays_use_input" not in st.session_state:
+    st.session_state.plays_use_input = df["gender"].unique()
+    
+if "play2_use_input" not in st.session_state:
+    st.session_state.plays_use_input = df["benefits"].unique()
 
-cole, col1, cole, col2, cole = st.columns([0.1, 1, 0.05, 1, 0.1])
-
-with col1:
-
-    MetricSlider01 = st.selectbox("Pick your 1st metric", new_slider_01)
-
-    #MetricSlider02 = st.selectbox("Pick your 2nd metric", new_slider_02, index=1)
-
-    st.write("")
-
-with col2:
-
-    if MetricSlider01 == "type":
-        # col_one_list = transaction_df_new["brand"].tolist()
-        col_one_list = df_new_slider_01["type"].drop_duplicates().tolist()
-        multiselect = st.multiselect(
-            "Select the value(s)", col_one_list, ["voluntary", "involuntary"]
+row00_0, row00_1, row00_2 = st.columns([0.5, 0.25, 1])
+with row00_0:
+    container = st.container()
+    all = st.checkbox("All", value=True)
+    if all:
+        type = container.multiselect(
+            "Type:",
+            st.session_state.gen_use_input,
+            default=st.session_state.gen_use_input,
         )
-        df = df[df["type"].isin(multiselect)]
+        gender = container.multiselect(
+            "Gender:",
+            st.session_state.plays_use_input,
+            default=st.session_state.plays_use_input,
+        )
+        reason = container.multiselect(
+            "Reason:",
+            st.session_state.reg_use_input,
+            default=st.session_state.reg_use_input,
+        )
+        benefits = container.multiselect(
+            "Benefits:",
+            st.session_state.plays2_use_input,
+            default=st.session_state.plays2_use_input,
+        )
+    else:
+        gender = container.multiselect(
+            "Sukupuoli:",
+            st.session_state.gen_use_input,
+        )
+        plays = container.multiselect(
+            "Koulutustaso:",
+            st.session_state.plays_use_input,
+        )
+        region = container.multiselect(
+            "Alue:",
+            st.session_state.reg_use_input,
+        )
 
-    elif MetricSlider01 == "reason":
-        col_one_list = (
-            df_new_slider_01["reason"].drop_duplicates().tolist()
-        )
-        multiselect = st.multiselect(
-            "Select the value(s)", col_one_list, ['Better salary and benefits','Lack of career growth opportunities', 'Poor management and work culture', 'Unhappy with job responsibilities', 'Violation of company policies and procedures', 'Poor performance and attendance', 'Conflict with colleagues and manager', 'Misconduct and inappropriate behavior']
-        )
-        df = df[
-            df["reason"].isin(multiselect)
+sel = [gender, type, reason, benefits]
+variants = list(itertools.product(*sel))
+variants: List[Variant] = [
+    Variant(gender=i[0], reason=i[1], type=i[2], benefits=i[3])
+    for i in variants
+]
+totals = {}
+
+for df in df.items():
+    filtered_dfs = []
+
+for variant in variants:
+    filtered_df = df[
+        (df["gender"] == variant.gender)
+        & (df["reason"] == variant.reason)
+        & (df["type"] == variant.type)
+        & (df["benefits"] == variant.benefits)
         ]
+
+    if not filtered_df.empty:
+        filtered_dfs.append(filtered_df)
 
 try:
     kmf = KaplanMeierFitter()
@@ -107,7 +154,7 @@ try:
 
     ## Employees with coaching
 
-    cohort1 = df[df["type"] == "voluntary"]
+    cohort1 = filtered_dfs[filtered_dfs["type"] == "voluntary"]
 
     kmf.fit(durations=cohort1["years_tenure"],
             event_observed=cohort1["event"],
@@ -117,7 +164,7 @@ try:
 
     ## Employees without coaching
 
-    cohort2 = df[df["type"] != "voluntary"]
+    cohort2 = filtered_dfs[filtered_dfs["type"] != "voluntary"]
 
     kmf.fit(durations=cohort2["years_tenure"],
             event_observed=cohort2["event"],
