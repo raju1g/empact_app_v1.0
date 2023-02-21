@@ -7,7 +7,6 @@ from dataclasses import dataclass
 from typing import List
 import random
 from lifelines import KaplanMeierFitter
-import ipywidgets as widgets
 
 
 ## Data Visualization:
