@@ -6,7 +6,6 @@ Created on Tue May 11 12:30:14 2021
 """
 
 import streamlit as st
-from streamlit.server.server import Server
 from datetime import datetime
 from datetime import timedelta
 from typing import List, Dict
@@ -236,6 +235,4 @@ def reload_window():
     time.sleep(1)
 
 
-def get_server_session():
-    return session._get_session_raw()
 
