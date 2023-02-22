@@ -115,21 +115,35 @@ with col2:
         )
 st.write(
 f"""
-<br><br>
+<br>
 """, unsafe_allow_html=True,
 )
 col3, col4 = st.columns([0.5,0.5])
 with col3:
-    selected_reg_to = st.multiselect(
+    selected_regto = st.multiselect(
         'Turnover reason:',
         reg_to
         )
 with col4:
-    selected_ben_to = st.multiselect(
+    selected_bento = st.multiselect(
         'Benefits:',
         ben_to
         )
-    
+df_filtered = df[
+    df['gender'].isin(selected_gento) & 
+    df['type'].isin(selected_typto) &
+    df['reason'].isin(selected_regto) &
+    df['benefits'].isin(selected_bento) &
+    ]
+# Avoid empty dataframe when no filters selected : 
+def filtered_data(df):
+    if df_filtered.empty :
+       st.write(df)
+    else : st.write(df_filtered)
+    return df_filtered
+
+# Write data frame :
+st.write(filtered_data)
 # try:
 kmf = KaplanMeierFitter()
 fig, ax = plt.subplots(figsize=(10, 5), dpi=500)
