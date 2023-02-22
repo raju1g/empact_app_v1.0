@@ -65,7 +65,6 @@ def load_data():
     
 st.write(
 f"""
-<br><br><br>
 <div class="base-wrapper" style="background-color:#224B90;">
     <div class="hero-wrapper">
         <div class="hero-container" style="width:100%; height: 200px">
@@ -80,7 +79,11 @@ f"""
 unsafe_allow_html=True,
 )
 
-
+st.write(
+"""
+<br><br><br>
+""", unsafe_allow_html=True,
+)
 df = load_data()
 st.dataframe(df, use_container_width=True)
 # try:
