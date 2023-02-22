@@ -1,12 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on:  
-@author: raju1g
-"""
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
 Created on:
 @author: raju1g
 """
@@ -14,6 +8,8 @@ Created on:
 import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
+from lifelines import KaplanMeierFitter
+
 from pandas.api.types import (
     is_categorical_dtype,
     is_datetime64_any_dtype,
