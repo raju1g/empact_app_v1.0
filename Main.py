@@ -88,7 +88,7 @@ st.write(
 
 df = load_data()
 with st.expander("Show the `employee turnover` dataframe"):
-    st.write(df)
+    st.dataframe(df, 100, 200)
 
 #st.dataframe(df, use_container_width=True)
 # try:
