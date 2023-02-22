@@ -102,7 +102,7 @@ typ_to = df['type'].unique().tolist()
 ben_to = df['benefits'].unique().tolist() 
 
 # Create a table to have filters side by side :
-col1, col2, col3, col4, col5, col6 = st.columns([0.5,1,1,1,1,0.5])
+col1, col2, col3, col4, col5, col6 = st.columns([0.1,0.5,0.5,0.5,0.5,0.1])
 with col2:
     selected_gento = st.multiselect(
         'Gender:',
