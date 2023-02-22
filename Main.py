@@ -133,7 +133,7 @@ df_filtered = df[
     df['gender'].isin(selected_gento) & 
     df['type'].isin(selected_typto) &
     df['reason'].isin(selected_regto) &
-    df['benefits'].isin(selected_bento) &
+    df['benefits'].isin(selected_bento)
     ]
 # Avoid empty dataframe when no filters selected : 
 def filtered_data(df):
