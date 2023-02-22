@@ -32,8 +32,8 @@ st.set_page_config(page_title="EmpAct Cooperative App",
                    page_icon="🔮")
 
 
-@st.experimental_memo
-def load_data():
+#@st.experimental_memo
+def main():
 
     # Load data
     df = pd.read_csv("datasets/turnover.csv", engine="python", encoding="ISO-8859-1")
@@ -61,10 +61,8 @@ def load_data():
     df["years_tenure"] = df["stag"] / 12
     df = df.drop(["stag"], axis=1)
     df['years_tenure'] = df["years_tenure"].round(1)
-    return df
+    #return df
     
-
-def main():
     st.write(
         f"""
         <br><br><br>
