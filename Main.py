@@ -11,6 +11,7 @@ import streamlit.components.v1 as components
 from lifelines import KaplanMeierFitter
 import matplotlib.pyplot as plt
 import seaborn as sns
+import utils
 
 from pandas.api.types import (
     is_categorical_dtype,
@@ -19,11 +20,33 @@ from pandas.api.types import (
     is_object_dtype,
 )
 
-st.title("Talent Management App")
+utils.local_css("style_trial.css")
 st.write(
-    """
-    """
+f"""
+<div class="base-wrapper" style="background-color:#00A300;">
+    <div class="hero-wrapper">
+        <div class="hero-container" style="width:100%; height:100px">
+            <div class="hero-container-content">
+                <span class="subpages-subcontainer-product white-span" style="margin-left: -0.5em;">Talent management audit</span>
+            </div>
+        </div>
+    </div>
+</div>
+""",
+unsafe_allow_html=True,
 )
+
+st.write(
+f"""
+<br><br><br>
+""", unsafe_allow_html=True,
+)
+
+#st.title("Talent Management App")
+#st.write(
+#    """
+#    """
+#)
 
 
 def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
