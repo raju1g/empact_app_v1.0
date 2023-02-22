@@ -105,35 +105,6 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
-
-def load_data():
-
-    # Load data
-    df1 = pd.read_csv("datasets/turnover.csv", engine="python", encoding="ISO-8859-1")
-    df1[["cost"]] = np.random.randint(10000, size=(1129, 1)).astype(float)
-    df1[["year"]] = np.random.randint([2021, 2022], size=(1129, 1)).astype(int)
-    df1 = df1.drop(["traffic"], axis=1)
-    df1 = df1.drop(["head_gender"], axis=1)
-    df1 = df.drop(["greywage"], axis=1)
-    df1 = df1.drop(["way"], axis=1)
-    df1 = df1.drop(["profession"], axis=1)
-    df1 = df1.drop(["extraversion"], axis=1)
-    df1 = df1.drop(["independ"], axis=1)
-    df1 = df1.drop(["selfcontrol"], axis=1)
-    df1 = df1.drop(["anxiety"], axis=1)
-    df1 = df1.drop(["coach"], axis=1)
-    df1 = df1.drop(["industry"], axis=1)
-    df1 = df1.rename({'novator': 'engagement'}, axis=1)
-    df1['benefits'] = pd.Series(random.choices(['yes', 'no'], weights=[1, 1], k=len(df)))
-    df1['type'] = pd.Series(random.choices(['voluntary', 'involuntary'], weights=[1, 1], k=len(df)))
-    df1['reason'] = pd.Series(random.choices(
-        ['Better salary and benefits', 'Lack of career growth opportunities', 'Poor management and work culture',
-         'Unhappy with job responsibilities', 'Violation of company policies and procedures',
-         'Poor performance and attendance', 'Conflict with colleagues and manager',
-         'Misconduct and inappropriate behavior'], weights=[1, 1, 1, 1, 1, 1, 1, 1], k=len(df)))
-    df1["years_tenure"] = df1["stag"] / 12
-    df1 = df1.drop(["stag"], axis=1)
-    df1['years_tenure'] = df1["years_tenure"].round(1)
-    return df1
-
-st.dataframe(filter_dataframe(df1))
+data_url = "https://github.com/raju1g/empact_app_v1.0/blob/main/datasets/penguins.csv"
+df = pd.read_csv(data_url)
+st.dataframe(filter_dataframe(df))
