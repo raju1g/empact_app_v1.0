@@ -104,8 +104,7 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
                     df = df[df[column].astype(str).str.contains(user_text_input)]
 
     return df
-
-data_url = "https://raw.githubusercontent.com/mcnakhaee/palmerpenguins/master/palmerpenguins/data/penguins.csv"
+data_url = "https://raw.githubusercontent.com/raju1g/empact_app_v1.0/blob/main/datasets/penguins.csv"
 
 df = pd.read_csv(data_url)
 st.dataframe(filter_dataframe(df))
