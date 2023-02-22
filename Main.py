@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from typing import List
 import random
 from lifelines import KaplanMeierFitter
+import utils
 
 
 ## Data Visualization:
@@ -62,7 +63,8 @@ def load_data():
     df = df.drop(["stag"], axis=1)
     df['years_tenure'] = df["years_tenure"].round(1)
     return df
-    
+  
+utils.local_css("style_trial.css")   
 st.write(
 f"""
 <div class="base-wrapper" style="background-color:#224B90;">
