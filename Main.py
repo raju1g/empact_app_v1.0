@@ -20,6 +20,11 @@ from pandas.api.types import (
     is_object_dtype,
 )
 
+st.set_page_config(page_title="EmpAct Cooperative App",
+                   initial_sidebar_state="collapsed",
+                   layout="wide",
+                   page_icon="🔮")
+
 utils.local_css("style_trial.css")
 st.write(
 f"""
