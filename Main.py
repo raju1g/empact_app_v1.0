@@ -4,7 +4,10 @@
 Created on:  
 @author: raju1g
 """
-
+from dataclasses import dataclass
+from typing import ClassVar
+!pip install snowflake
+from snowflake.snowpark.session import Session
 
 # main.py
 # Initialize connection.
@@ -14,11 +17,6 @@ def init_connection() -> Session:
 if __name__ == "__main__":
     # Initialize the filters
     session = init_connection()
-
-
-from dataclasses import dataclass
-from typing import ClassVar
-from snowflake.snowpark.session import Session
 
 @dataclass
 class OurFilter:
