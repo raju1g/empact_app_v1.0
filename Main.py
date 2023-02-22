@@ -67,7 +67,7 @@ def load_data():
 utils.local_css("style_trial.css")   
 st.write(
 f"""
-<div class="base-wrapper" style="background-color:#224B90;">
+<div class="base-wrapper" style="background-color:#90EE90;">
     <div class="hero-wrapper">
         <div class="hero-container" style="width:100%; height:100px">
             <div class="hero-container-content">
@@ -85,8 +85,12 @@ st.write(
 <br><br><br>
 """, unsafe_allow_html=True,
 )
+
 df = load_data()
-st.dataframe(df, use_container_width=True)
+with st.expander("Show the `employee turnover` dataframe"):
+    st.write(df)
+
+#st.dataframe(df, use_container_width=True)
 # try:
 kmf = KaplanMeierFitter()
 fig, ax = plt.subplots(figsize=(10, 5), dpi=500)
