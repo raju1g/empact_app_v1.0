@@ -63,7 +63,8 @@ def load_data():
     df['years_tenure'] = df["years_tenure"].round(1)
     return df
     
-    def main():
+
+def main():
     st.write(
         f"""
         <br><br><br>
