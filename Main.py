@@ -19,11 +19,9 @@ from pandas.api.types import (
     is_object_dtype,
 )
 
-st.title("Auto Filter Dataframes in Streamlit")
+st.title("Talent Management App")
 st.write(
-    """This app accomodates the blog [here](<https://blog.streamlit.io/auto-generate-a-dataframe-filtering-ui-in-streamlit-with-filter_dataframe/>)
-    and walks you through one example of how the Streamlit
-    Data Science Team builds add-on functions to Streamlit.
+    """
     """
 )
 
