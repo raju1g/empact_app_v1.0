@@ -23,7 +23,7 @@ from pandas.api.types import (
 utils.local_css("style_trial.css")
 st.write(
 f"""
-<div class="base-wrapper" style="background-color:#00A300;">
+<div class="base-wrapper" style="background-color:#FA8072;">
     <div class="hero-wrapper">
         <div class="hero-container" style="width:100%; height:100px">
             <div class="hero-container-content">
