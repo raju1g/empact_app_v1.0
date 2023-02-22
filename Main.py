@@ -81,7 +81,7 @@ unsafe_allow_html=True,
 )
 
 st.write(
-"""
+f"""
 <br><br><br>
 """, unsafe_allow_html=True,
 )
@@ -90,7 +90,40 @@ df = load_data()
 with st.expander("Show the `employee turnover` dataframe"):
     st.dataframe(df, 100, 200)
 
-#st.dataframe(df, use_container_width=True)
+st.write(
+f"""
+<br><br><br>
+""", unsafe_allow_html=True,
+)
+
+gen_to = df['gender'].unique().tolist() 
+reg_to = df['reason'].unique().tolist() 
+typ_to = df['type'].unique().tolist() 
+ben_to = df['benefits'].unique().tolist() 
+
+# Create a table to have filters side by side :
+col1, col2, col3, col4, col5, col6 = st.columns([0.5,1,1,1,1,0.5])
+with col2:
+    selected_gento = st.multiselect(
+        'Gender:',
+        gen_to
+        )
+with col3:
+    selected_typto = st.multiselect(
+        'Turnover type:',
+        typ_to
+        )
+with col4:
+    selected_reg_to = st.multiselect(
+        'Turnover reason:',
+        reg_to
+        )
+with col5:
+    selected_ben_to = st.multiselect(
+        'Benefits:',
+        ben_to
+        )
+    
 # try:
 kmf = KaplanMeierFitter()
 fig, ax = plt.subplots(figsize=(10, 5), dpi=500)
