@@ -105,6 +105,7 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
-data_url = "https://github.com/raju1g/empact_app_v1.0/blob/main/datasets/penguins.csv"
+data_url = "https://raw.githubusercontent.com/mcnakhaee/palmerpenguins/master/palmerpenguins/data/penguins.csv"
+
 df = pd.read_csv(data_url)
 st.dataframe(filter_dataframe(df))
