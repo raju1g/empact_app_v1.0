@@ -6,7 +6,7 @@ Created on:
 """
 from dataclasses import dataclass
 from typing import ClassVar
-pip install snowflake
+#pip install snowflake
 from snowflake.snowpark.session import Session
 
 # main.py
