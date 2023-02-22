@@ -1,39 +1,116 @@
-import streamlit as st
-import pandas as pd
-import numpy as np
-import itertools
-from itertools import product
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on:  
+@author: raju1g
+"""
+
+
+# main.py
+# Initialize connection.
+def init_connection() -> Session:
+    return Session.builder.configs(st.secrets["snowpark"]).create()
+
+if __name__ == "__main__":
+    # Initialize the filters
+    session = init_connection()
+
+
 from dataclasses import dataclass
-from typing import List
-import random
-from lifelines import KaplanMeierFitter
-import utils
+from typing import ClassVar
+from snowflake.snowpark.session import Session
+
+@dataclass
+class OurFilter:
+    """This dataclass represents the filter that can be optionally enabled.
+
+    It is created to parametrize the creation of filters from Streamlit and to keep the state."""
+    # Class variables
+    table_name: ClassVar[str]
+    session: ClassVar[Session]
+
+    # The name to display in UI
+    human_name: str
+    # Column in the table which will be used for filtering
+    table_column: str
+    # ID of the streamlit widget
+    widget_id: str
+    # The type of streamlit widget to generate
+    widget_type: callable
+    # Field to track if the filter is active. Can be used for filtering the list of filters
+    is_enabled: bool = False
+    # max value
+    _max_value: int = 0
+    # dataframe method that will be used for filtering the data
+    _df_method: str = ""
+
+def __post_init__(self):
+    if self.widget_type not in (st.select_slider, st.checkbox):
+        raise NotImplemented
+
+    if self.widget_type is st.select_slider:
+        self._df_method = "between"
+        self._max_value = (
+            self.session.table(MY_TABLE)
+            .select(max(col(self.table_column)))
+            .collect()[0][0]
+        )
+    elif self.widget_type is st.checkbox:
+        self._df_method = "__eq__"
 
 
-## Data Visualization:
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-#%matplotlib inline
-
-from plotly.offline import iplot, init_notebook_mode
-import plotly.express as px
-
-## Correlation
-from scipy.stats.stats import pearsonr
-
-## Let's install lifelines
-#!pip install lifelines --upgrade --quiet
-
-## Let's import lifelines
-import lifelines
-
-st.set_page_config(page_title="EmpAct Cooperative App",
-                   initial_sidebar_state="collapsed",
-                   page_icon="🔮")
+def create_widget(self):
+    if self.widget_type is st.select_slider:
+        base_label = "Select the range of"
+    elif self.widget_type is st.checkbox:
+        base_label = "Is"
+    else:
+        base_label = "Choose"
+    widget_kwargs = dict(label=f"{base_label} {self.widget_id}", key=self.widget_id)
+    if self.widget_type is st.select_slider:
+        widget_kwargs.update(
+            dict(
+                options=list(range(self.max_value + 1)),
+                value=(0, self.max_value),
+            )
+        )
+    # Invocation of the streamlit method to place the widget on the page
+    # e.g. st.checkbox(**widget_kwargs)
+    self.widget_type(**widget_kwargs)
 
 
-@st.experimental_memo
+def __call__(self, _table: Table):
+    """This method turns this class into a functor allowing to filter the dataframe.
+
+    This allows to call it like so:
+
+    f = OurFilter(...)
+    new_table = last_table[f(last_table)]"""
+    return methodcaller(self.df_method, **(self._get_filter_value()))(
+        _table[self.table_column.upper()]
+    )
+
+def _get_filter_value(self):
+    """Custom unpack function that retrieves the value of the filter
+    from session state in a format compatible with self._df_method"""
+    _val = st.session_state.get(self.widget_id)
+    if self.widget_type is st.checkbox:
+        # For .eq
+        return dict(other=_val)
+    elif self.widget_type is st.select_slider:
+        # For .between
+        return dict(lower_bound=_val[0], upper_bound=_val[1])
+    else:
+        raise NotImplemented
+
+
+from typing import Iterable
+
+import streamlit as st
+from lib.filterwidget import OurFilter
+from toolz import pluck
+
+
 def load_data():
 
     # Load data
@@ -64,138 +141,88 @@ def load_data():
     df['years_tenure'] = df["years_tenure"].round(1)
     return df
 
+df = load_data()
+MY_TABLE = df
 
-def main():
-    utils.local_css("style_trial.css")   
-    st.write(
-    f"""
-    <div class="base-wrapper" style="background-color:#00A300;">
-        <div class="hero-wrapper">
-            <div class="hero-container" style="width:100%; height:100px">
-                <div class="hero-container-content">
-                    <span class="subpages-subcontainer-product white-span" style="margin-left: -0.5em;">Talent management audit</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    """,
-    unsafe_allow_html=True,
+def _get_active_filters() -> filter:
+    return filter(lambda _: _.is_enabled, st.session_state.filters)
+
+def _is_any_filter_enabled() -> bool:
+    return any(pluck("is_enabled", st.session_state.filters))
+
+def _get_human_filter_names(_iter: Iterable) -> Iterable:
+    return pluck("human_name", _iter)
+
+def draw_sidebar():
+    """Should include dynamically generated filters"""
+
+    with st.sidebar:
+        selected_filters = st.multiselect(
+            "Select which filters to enable",
+            list(_get_human_filter_names(st.session_state.filters)),
+            [],
+        )
+        for _f in st.session_state.filters:
+            if _f.human_name in selected_filters:
+                _f.enable()
+
+        if _is_any_filter_enabled():
+            with st.form(key="input_form"):
+
+                for _f in _get_active_filters():
+                    _f.create_widget()
+                st.session_state.clicked = st.form_submit_button(label="Submit")
+        else:
+            st.write("Please enable a filter")
+
+if __name__ == "__main__":
+    # Initialize the filters
+    session = init_connection()
+    OurFilter.session = session
+    OurFilter.table_name = MY_TABLE
+
+    st.session_state.filters = (
+        OurFilter(
+            human_name="Gender",
+            table_column="gender",
+            widget_id="gender",
+            widget_type=st.multiselect,
+        ),
+        OurFilter(
+            human_name="Tenure",
+            table_column="years_tenure",
+            widget_id="tenure_slider",
+            widget_type=st.select_slider,
+        )
     )
 
-    st.write(
-    f"""
-    <br><br><br>
-    """, unsafe_allow_html=True,
-    )
-
-    df = load_data()
-    with st.expander("Show the `employee turnover` dataframe"):
-        st.dataframe(df, 100, 200)
-
-    st.write(
-    f"""
-    <br><br><br>
-    """, unsafe_allow_html=True,
-    )
-
-    gen_to = df['gender'].unique().tolist() 
-    reg_to = df['reason'].unique().tolist() 
-    typ_to = df['type'].unique().tolist() 
-    ben_to = df['benefits'].unique().tolist() 
-
-    # Create a table to have filters side by side :
-    col1, col2 = st.columns([0.5,0.5])
-    with col1:
-        selected_gento = st.multiselect(
-            'Gender:',
-            gen_to
-            )
-    with col2:
-        selected_typto = st.multiselect(
-            'Turnover type:',
-            typ_to
-            )
-    st.write(
-    f"""
-    <br>
-    """, unsafe_allow_html=True,
-    )
-    col3, col4 = st.columns([0.5,0.5])
-    with col3:
-        selected_regto = st.multiselect(
-            'Turnover reason:',
-            reg_to
-            )
-    with col4:
-        selected_bento = st.multiselect(
-            'Benefits:',
-            ben_to
-            )
-    df_filtered = df[
-        df['gender'].isin(selected_gento) & 
-        df['type'].isin(selected_typto) &
-        df['reason'].isin(selected_regto) &
-        df['benefits'].isin(selected_bento)
-        ]
-    # Avoid empty dataframe when no filters selected : 
-    def filtered_data(df):
-        if df_filtered.empty :
-           st.write(df)
-        else : st.write(df_filtered)
-        return df_filtered
-
-    # Write data frame :
-    st.write(filtered_data)
-    # try:
-    kmf = KaplanMeierFitter()
-    fig, ax = plt.subplots(figsize=(10, 5), dpi=500)
-
-    ## Employees with coaching
-
-    cohort1 = df[df['type'] == "voluntary"]
-
-    kmf.fit(durations=cohort1["years_tenure"],
-            event_observed=cohort1["event"],
-            label='Voluntary turnover')
-
-    kmf.plot_survival_function(ax=ax, ci_show=False)
-
-    ## Employees without coaching
-
-    cohort2 = df[df['type'] != "voluntary"]
-
-    kmf.fit(durations=cohort2["years_tenure"],
-            event_observed=cohort2["event"],
-            label='Involuntary turnover')
-
-    ## Adding a few details to the plot
-
-    kmf.plot_survival_function(ax=ax, ci_show=False)
-
-    ax.set_ylabel("Employee survival rate")
-    ax.set_xlabel("Timeline - years")
-
-    plt.text(5.15, 0.7, '50% voluntary turnover', size=10, color='lightblue')
-    plt.text(5.15, 0.66, 'after 5 years', size=10, color='lightblue')
-    plt.text(-0.5, 0.3, '50% involuntary turnover', size=10, color='orange')
-    plt.text(-0.5, 0.26, 'after 3.5 years', size=10, color='orange')
-    plt.axvline(x=4.9, color='lightblue', linestyle='--')
-    plt.axvline(x=3.5, color='orange', linestyle='--')
-
-    plt.legend(fontsize=9)
-
-    for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] +
-                 ax.get_xticklabels() + ax.get_yticklabels()):
-        item.set_fontsize(10)
-    fig
-    # except IndexError:
-    #    st.warning("This is throwing an exception, bear with us!")
+    draw_sidebar()
 
 
-if __name__ == '__main__':
-    main()
+def draw_main_ui(_session: Session):
+    """Contains the logic and the presentation of the main section of the UI"""
+    if _is_any_filter_enabled():  # Do not run any logic if no filters are actually enabled
 
+        customers: Table = _session.table(MY_TABLE)
+        table_sequence = [customers]
 
+        _f: MyFilter
+        for _f in _get_active_filters():
+            # This block generates the sequence of dataframes as continually applying AND filtering set by the sidebar
+            # The dataframes are to be used in the Sankey chart.
 
+            # First, get the last dataframe in the list
+            last_table = table_sequence[-1]
+            # Apply the current filter to it
+            new_table = last_table[
+                # At this point the filter will be applied to the dataframe using the __call__ method
+                _f(last_table)
+            ]
+            # And save it in the sequence
+            table_sequence += [new_table]
 
+        st.header("Dataframe preview")
 
+        st.write(table_sequence[-1].sample(n=5).to_pandas().head())
+    else:
+        st.write("Please enable a filter in the sidebar to show transformations")
