@@ -62,6 +62,26 @@ def load_data():
     df = df.drop(["stag"], axis=1)
     df['years_tenure'] = df["years_tenure"].round(1)
     return df
+
+
+def main():
+    st.write(
+        f"""
+        <br><br><br>
+        <div class="base-wrapper" style="background-color:#224B90;">
+            <div class="hero-wrapper">
+                <div class="hero-container" style="width:100%; height: 200px">
+                    <div class="hero-container-content">
+                        <span class="subpages-container-product white-span" style="margin-left: -0.5em;">Mittarit</span>
+                        <span class="subpages-subcontainer-product white-span" style="margin-left: -0.5em;">Talent management audit</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
 df = load_data()
 st.dataframe(df, use_container_width=True)
   #try:
