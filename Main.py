@@ -299,8 +299,9 @@ st.markdown(
 )
 st.title("Recommendations")
 st.markdown(
-    """In order to significantly reduce the turnover cost to the company, we recommend the following points:
-       - To reduce the high turnover due to conflict with colleagues and managers, the onboarding and integration process needs to be thoroughly reviewed. 
-       - Better coaching and training programs need to be implemented to reduce performance related turnover in both men and women. 
-    """
+"""
+In order to significantly reduce the turnover cost to the company, we recommend the following points:
+- To reduce the high turnover due to conflict with colleagues and managers, the onboarding and integration process needs to be thoroughly reviewed. 
+- Better coaching and training programs need to be implemented to reduce performance related turnover in both men and women. 
+"""
 )
