@@ -133,10 +133,32 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 
 df = pd.read_csv("datasets/penguins.csv")
 filtered_df = filter_dataframe(df)
+total_cost = filtered_df.groupby["cost"].agg('sum')
 
 col1, col2, col3, col4 = st.columns([0.1, 1, 1, 0.1])
 with col2:
     st.dataframe(filtered_df)
+with col3:
+    st.write(
+        f"""
+        <br><br>
+        <div class="base-wrapper" style="background-color: green; opacity: 0.1; border-radius: 2.5rem;
+        border-top: 2.5px solid #224B90; border-bottom: 2.5px solid #224B90;
+        border-left: 2.5px solid #224B90; border-right: 2.5px solid #224B90;
+        background-repeat: no-repeat;
+        opacity: 0.8; background-size: 80px;">
+            <div class="hero-wrapper">
+                <div class="hero-container" style="width: 300px; height: 150px;">
+                    <div class="hero-container-content">
+                        <span class="subpages-container-product darkblue-span" style="text-align: right; font-size: 18px; margin-left: -2.5em; margin-top: 2.5em; line-height: 30px; text-transform: capitalize; color: white;">Turnover cost</span>
+                        <span class="subpages-container-product darkblue-span" style="text-align: right; font-size: 48px; margin-left: -0.5em; margin-top: 0.25em; color: white;">{'{0:,}'.format(total_cost)}</span>
+                    </div>
+                </div>
+            </div><br>
+        </div>
+        """,
+        unsafe_allow_html=True,
+        )
 
 
 cols1, cols2, cols3, cols4 = st.columns([0.1, 1, 1, 0.1])
