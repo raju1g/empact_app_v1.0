@@ -154,7 +154,7 @@ with col3:
             <div class="hero-wrapper">
                 <div class="hero-container" style="width: 50px; height: 50px;">
                     <div class="hero-container-content">
-                        <span class="subpages-container-product darkblue-span" style="text-align: center; font-size: 18px; margin-left: -2.5em; margin-top: 0.5em; line-height: 30px; text-transform: capitalize; color: #224B90;">Cost (€) {total_cost_voluntary}</span>
+                        <span class="subpages-container-product darkblue-span" style="text-align: center; font-size: 18px; margin-left: -2.5em; margin-top: 0.5em; text-transform: capitalize; color: #224B90;">Cost (€) {total_cost_voluntary}</span>
                     </div>
                 </div>
             </div>
@@ -174,7 +174,7 @@ with col3:
             <div class="hero-wrapper">
                 <div class="hero-container" style="width: 50px; height: 50px;">
                     <div class="hero-container-content">
-                        <span class="subpages-container-product darkblue-span" style="text-align: center; font-size: 18px; margin-top: 0.5em; line-height: 30px; text-transform: capitalize; color: #224B90;">Cost (€) {total_cost_involuntary}</span>
+                        <span class="subpages-container-product darkblue-span" style="text-align: center; font-size: 18px; margin-top: 0.5em; text-transform: capitalize; color: #224B90;">Cost (€) {total_cost_involuntary}</span>
                     </div>
                 </div>
             </div>
