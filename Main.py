@@ -140,7 +140,7 @@ cohort2 = filtered_df[filtered_df['type'] != "voluntary"]
 involuntary_x_median = cohort2['years_tenure'].median()
 total_cost_involuntary = cohort2['cost'].aggregate('sum')
 
-col1, col2, col3, col4 = st.columns([0.1, 1, 1, 0.1])
+col1, col2, col3, col4 = st.columns([0.1, 1, 0.5, 0.1])
 with col2:
     st.dataframe(filtered_df)
 with col3:
@@ -223,3 +223,11 @@ with cols2:
                  ax.get_xticklabels() + ax.get_yticklabels()):
         item.set_fontsize(10)
     fig
+
+with cols3:
+    fig1, ax1 = filtered_df.reason.value_counts().plot(kind='bar')
+    ax1.set_ylabel("frequency")
+    for item in ([ax1.title, ax1.xaxis.label, ax1.yaxis.label] +
+                 ax1.get_xticklabels() + ax1.get_yticklabels()):
+        item.set_fontsize(10)
+    fig1
