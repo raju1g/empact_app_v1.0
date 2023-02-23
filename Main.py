@@ -142,10 +142,49 @@ cohort2 = filtered_df[filtered_df['type'] != "voluntary"]
 involuntary_x_median = cohort2['years_tenure'].median()
 total_cost_involuntary = cohort2['cost'].aggregate('sum')
 
-col1, col2, col3, col4 = st.columns([0.1, 1, 0.5, 0.1])
+col1, col2, col3, col4, col5 = st.columns([0.1, 1, 0.5, 0.5, 0.1])
 with col2:
     st.dataframe(filtered_df)
 with col3:
+    st.write(
+        f"""
+        <div class="base-wrapper" style="background-color: lightblue; opacity: 0.1; border-radius: 0.5rem;
+        border-top: 2.5px solid #224B90; border-bottom: 2.5px solid #224B90;
+        border-left: 2.5px solid #224B90; border-right: 2.5px solid #224B90;
+        background-repeat: no-repeat;
+        opacity: 0.8; background-size: 80px;">
+            <div class="hero-wrapper">
+                <div class="hero-container" style="width:100%; height:100px">
+                    <div class="hero-container-content">
+                        <span class="subpages-subcontainer-product white-span" style="margin-left: 0em; text-transform: capitalize; color: #224B90; font-size: 24px;">50% turnover after {voluntary_x_median} years</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+        )
+    
+    st.write(
+        f"""
+        <br>
+        <div class="base-wrapper" style="background-color: orange; opacity: 0.1; border-radius: 0.5rem;
+        border-top: 2.5px solid #224B90; border-bottom: 2.5px solid #224B90;
+        border-left: 2.5px solid #224B90; border-right: 2.5px solid #224B90;
+        background-repeat: no-repeat;
+        opacity: 0.8; background-size: 80px;">
+            <div class="hero-wrapper">
+                <div class="hero-container" style="width:100%; height:100px">
+                    <div class="hero-container-content">
+                        <span class="subpages-subcontainer-product white-span" style="margin-left: 0em; text-transform: capitalize; color: #224B90; font-size: 24px;">50% turnover after {involuntary_x_median} years</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+        )
+with col4:
     st.write(
         f"""
         <div class="base-wrapper" style="background-color: lightblue; opacity: 0.1; border-radius: 0.5rem;
@@ -184,7 +223,6 @@ with col3:
         """,
         unsafe_allow_html=True,
         )
-
 
 cols1, cols2, cols3, cols4 = st.columns([0.1, 1, 1, 0.1])
 with cols2:
