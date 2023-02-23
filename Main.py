@@ -167,7 +167,7 @@ ax.set_ylabel("Employee survival rate")
 ax.set_xlabel("Timeline - years")
 
 plt.text(8, 0.7, '-- 50% voluntary turnover', size=10, color='lightblue')
-plt.text(8, 0.66, 'after '{0:,}'.format(voluntary_x_median) years', size=10, color='lightblue')
+plt.text(8, 0.66, 'after {0:.2f}.format(voluntary_x_median) years', size=10, color='lightblue')
 plt.text(8, 0.5, '-- 50% involuntary turnover', size=10, color='orange')
 plt.text(8, 0.46, 'after '{0:,}'.format(involuntary_x_median) years', size=10, color='orange')
 plt.axvline(x=voluntary_x_median, color='lightblue', linestyle='--')
