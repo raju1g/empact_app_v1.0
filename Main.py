@@ -133,7 +133,7 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 
 df = pd.read_csv("datasets/penguins.csv")
 filtered_df = filter_dataframe(df)
-total_cost = filtered_df.groupby(['cost']).sum()
+total_cost = filtered_df.groupby('cost').sum()
 
 col1, col2, col3, col4 = st.columns([0.1, 1, 1, 0.1])
 with col2:
