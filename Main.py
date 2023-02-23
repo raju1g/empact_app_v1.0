@@ -154,8 +154,28 @@ with col3:
             <div class="hero-wrapper">
                 <div class="hero-container" style="width: 100px; height: 50px;">
                     <div class="hero-container-content">
-                        <span class="subpages-container-product darkblue-span" style="text-align: center; font-size: 18px; margin-left: -2.5em; margin-top: 2.5em; line-height: 30px; text-transform: capitalize; color: white;">Turnover cost</span>
-                        <span class="subpages-container-product darkblue-span" style="text-align: center; font-size: 12px; margin-left: -0.5em; margin-top: 0.25em; color: white;">{total_cost}</span>
+                        <span class="subpages-container-product darkblue-span" style="text-align: center; font-size: 18px; margin-left: -2.5em; margin-top: 2.5em; line-height: 30px; text-transform: capitalize; color: #224B90;">Turnover cost</span>
+                        <span class="subpages-container-product darkblue-span" style="text-align: center; font-size: 12px; margin-left: -0.5em; margin-top: 0.25em; color: #224B90;">{total_cost_voluntary}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+        )
+    
+    st.write(
+        f"""
+        <div class="base-wrapper" style="background-color: orange; opacity: 0.1; border-radius: 0.5rem;
+        border-top: 2.5px solid #224B90; border-bottom: 2.5px solid #224B90;
+        border-left: 2.5px solid #224B90; border-right: 2.5px solid #224B90;
+        background-repeat: no-repeat;
+        opacity: 0.8; background-size: 80px;">
+            <div class="hero-wrapper">
+                <div class="hero-container" style="width: 100px; height: 50px;">
+                    <div class="hero-container-content">
+                        <span class="subpages-container-product darkblue-span" style="text-align: center; font-size: 18px; margin-left: -2.5em; margin-top: 2.5em; line-height: 30px; text-transform: capitalize; color: #224B90;">Turnover cost</span>
+                        <span class="subpages-container-product darkblue-span" style="text-align: center; font-size: 12px; margin-left: -0.5em; margin-top: 0.25em; color: #224B90;">{total_cost_involuntary}</span>
                     </div>
                 </div>
             </div>
