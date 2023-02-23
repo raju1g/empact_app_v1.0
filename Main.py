@@ -151,7 +151,7 @@ with col3:
                 <div class="hero-container" style="width: 300px; height: 150px;">
                     <div class="hero-container-content">
                         <span class="subpages-container-product darkblue-span" style="text-align: right; font-size: 18px; margin-left: -2.5em; margin-top: 2.5em; line-height: 30px; text-transform: capitalize; color: white;">Turnover cost</span>
-                        <span class="subpages-container-product darkblue-span" style="text-align: right; font-size: 48px; margin-left: -0.5em; margin-top: 0.25em; color: white;">{'{0:,}'.format(total_cost)}</span>
+                        <span class="subpages-container-product darkblue-span" style="text-align: right; font-size: 48px; margin-left: -0.5em; margin-top: 0.25em; color: white;">{total_cost}</span>
                     </div>
                 </div>
             </div><br>
