@@ -22,7 +22,7 @@ from pandas.api.types import (
 
 st.set_page_config(page_title="EmpAct Cooperative App",
                    initial_sidebar_state="collapsed",
-                   layout="wide",
+                   layout="centered",
                    page_icon="🔮")
 
 utils.local_css("style_trial.css")
