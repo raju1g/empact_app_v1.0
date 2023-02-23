@@ -237,6 +237,6 @@ with cols3:
     figure_1 = px.histogram(filtered_df, x="reason")
     
     figure_1.update_layout(showlegend=False)
-    figure_1.update_xaxes(tickfont_size=22, showgrid=False)
+    figure_1.update_xaxes(tickfont_size=10, showgrid=False)
     figure_1.update_yaxes(showticklabels=False, showgrid=False)
     st.plotly_chart(figure_1, use_container_width=True, config=config)
