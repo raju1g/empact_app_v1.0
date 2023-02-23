@@ -156,7 +156,7 @@ with col3:
             <div class="hero-wrapper">
                 <div class="hero-container" style="width:100%; height:100px">
                     <div class="hero-container-content">
-                        <span class="subpages-subcontainer-product white-span" style="margin-left: 0em; text-transform: capitalize; color: #224B90; font-size: 24px;">50% turnover after {voluntary_x_median} years</span>
+                        <span class="subpages-subcontainer-product white-span" style="margin-left: 0em; text-transform: capitalize; color: #224B90; font-size: 14px;">50% turnover after {voluntary_x_median} years</span>
                     </div>
                 </div>
             </div>
@@ -176,7 +176,7 @@ with col3:
             <div class="hero-wrapper">
                 <div class="hero-container" style="width:100%; height:100px">
                     <div class="hero-container-content">
-                        <span class="subpages-subcontainer-product white-span" style="margin-left: 0em; text-transform: capitalize; color: #224B90; font-size: 24px;">50% turnover after {involuntary_x_median} years</span>
+                        <span class="subpages-subcontainer-product white-span" style="margin-left: 0em; text-transform: capitalize; color: #224B90; font-size: 14px;">50% turnover after {involuntary_x_median} years</span>
                     </div>
                 </div>
             </div>
