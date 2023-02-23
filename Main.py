@@ -136,9 +136,11 @@ filtered_df = filter_dataframe(df)
 
 col1, col2, col3, col4 = st.columns([0.1, 1, 1, 0.1])
 with col2:
-    st.dataframe(filtered_df)
+    st.dataframe(filtered_df.style.highlight_max(axis=0))
 
-with col3:
+
+cols1, cols2, cols3, cols4 = st.columns([0.1, 1, 1, 0.1])
+with cols2:
     kmf = KaplanMeierFitter()
     fig, ax = plt.subplots(figsize=(10, 5), dpi=500)
 
