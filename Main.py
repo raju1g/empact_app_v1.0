@@ -141,6 +141,8 @@ fig, ax = plt.subplots(figsize=(10, 5), dpi=500)
 ## Employees with coaching
 
 cohort1 = filtered_df[filtered_df['type'] == "voluntary"]
+voluntary_x_median = cohort1['years_tenure'].median()
+
 
 kmf.fit(durations=cohort1["years_tenure"],
         event_observed=cohort1["event"],
@@ -151,6 +153,7 @@ kmf.plot_survival_function(ax=ax, ci_show=False)
 ## Employees without coaching
 
 cohort2 = filtered_df[filtered_df['type'] != "voluntary"]
+involuntary_x_median = cohort2['years_tenure'].median()
 
 kmf.fit(durations=cohort2["years_tenure"],
         event_observed=cohort2["event"],
@@ -167,8 +170,8 @@ plt.text(5.15, 0.7, '50% voluntary turnover', size=10, color='lightblue')
 plt.text(5.15, 0.66, 'after 5 years', size=10, color='lightblue')
 plt.text(-0.5, 0.3, '50% involuntary turnover', size=10, color='orange')
 plt.text(-0.5, 0.26, 'after 3.5 years', size=10, color='orange')
-plt.axvline(x=4.9, color='lightblue', linestyle='--')
-plt.axvline(x=3.5, color='orange', linestyle='--')
+plt.axvline(x=voluntary_x_median, color='lightblue', linestyle='--')
+plt.axvline(x=involuntary_x_median, color='orange', linestyle='--')
 
 plt.legend(fontsize=9)
 
