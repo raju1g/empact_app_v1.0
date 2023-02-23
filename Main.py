@@ -226,5 +226,34 @@ with cols2:
     fig
 
 with cols3:
-    fig1 = px.histogram(filtered_df, x="reason")
-    fig1
+    data1 = go.Bar(
+                x=cohort1["reason"],
+                name='Voluntary',
+                text=cohort1.reason.count(),
+                textposition='inside',
+                texttemplate='%{text:}',
+                marker_color='lightblue',
+                marker_line_color='blue'
+            )
+    data2 = go.Bar(
+                x=cohort2["reason"],
+                name='Involuntary',
+                text=cohort2.reason.count(),
+                textposition='inside',
+                texttemplate='%{text:}',
+                marker_color='orange',
+                marker_line_color='blue'
+            )
+    #fig1 = px.histogram(filtered_df, x="reason")
+    data_1 = [data1, data2]
+    layout_1 = go.Layout(title='', barmode='stack',
+                         uniformtext=dict(mode="hide", minsize=6), title_font_size=22, font_size=18,
+                         title_font_family='Arial',
+                         hoverlabel_align='left', width=1200, height=400, paper_bgcolor='rgba(0,0,0,0)',
+                         plot_bgcolor='whitesmoke')
+    figure_1 = go.Figure(data=data_1, layout=layout_1)
+    
+    figure_1.update_layout(showlegend=False)
+    figure_1.update_xaxes(tickfont_size=22, showgrid=False)
+    figure_1.update_yaxes(showticklabels=False, showgrid=False)
+    st.plotly_chart(figure_1, use_container_width=True, config=config)
