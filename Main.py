@@ -141,20 +141,20 @@ with col2:
 with col3:
     st.write(
         f"""
-        <br><br>
-        <div class="base-wrapper" style="background-color: green; opacity: 0.1; border-radius: 2.5rem;
+        <br>
+        <div class="base-wrapper" style="background-color: lightblue; opacity: 0.1; border-radius: 2.5rem;
         border-top: 2.5px solid #224B90; border-bottom: 2.5px solid #224B90;
         border-left: 2.5px solid #224B90; border-right: 2.5px solid #224B90;
         background-repeat: no-repeat;
         opacity: 0.8; background-size: 80px;">
             <div class="hero-wrapper">
-                <div class="hero-container" style="width: 300px; height: 150px;">
+                <div class="hero-container" style="width: 100px; height: 50px;">
                     <div class="hero-container-content">
                         <span class="subpages-container-product darkblue-span" style="text-align: right; font-size: 18px; margin-left: -2.5em; margin-top: 2.5em; line-height: 30px; text-transform: capitalize; color: white;">Turnover cost</span>
-                        <span class="subpages-container-product darkblue-span" style="text-align: right; font-size: 48px; margin-left: -0.5em; margin-top: 0.25em; color: white;">{total_cost}</span>
+                        <span class="subpages-container-product darkblue-span" style="text-align: right; font-size: 12px; margin-left: -0.5em; margin-top: 0.25em; color: white;">{total_cost}</span>
                     </div>
                 </div>
-            </div><br>
+            </div>
         </div>
         """,
         unsafe_allow_html=True,
