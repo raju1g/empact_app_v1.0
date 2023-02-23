@@ -225,9 +225,9 @@ with cols2:
     fig
 
 with cols3:
-    fig1, ax1 = filtered_df.reason.value_counts().plot(kind='bar')
-    ax1.set_ylabel("frequency")
-    for item in ([ax1.title, ax1.xaxis.label, ax1.yaxis.label] +
-                 ax1.get_xticklabels() + ax1.get_yticklabels()):
+    fig1, ax = filtered_df.reason.value_counts().plot(kind='bar')
+    ax.set_ylabel("frequency")
+    for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] +
+                 ax.get_xticklabels() + ax.get_yticklabels()):
         item.set_fontsize(10)
     fig1
