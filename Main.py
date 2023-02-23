@@ -140,7 +140,7 @@ cohort2 = filtered_df[filtered_df['type'] != "voluntary"]
 involuntary_x_median = cohort2['years_tenure'].median()
 total_cost_involuntary = cohort2['cost'].aggregate('sum')
 
-col1, col2, col3, col4 = st.columns([0.1, 1, 1, 0.1])
+col1, col2, col3, col4 = st.columns([0.1, 1, 0.5, 0.1])
 with col2:
     st.dataframe(filtered_df)
 with col3:
@@ -152,7 +152,7 @@ with col3:
         background-repeat: no-repeat;
         opacity: 0.8; background-size: 80px;">
             <div class="hero-wrapper">
-                <div class="hero-container" style="width: 100px; height: 50px;">
+                <div class="hero-container" style="width: 100px; height: 100px;">
                     <div class="hero-container-content">
                         <span class="subpages-container-product darkblue-span" style="text-align: center; font-size: 18px; margin-left: -2.5em; margin-top: 2.5em; line-height: 30px; text-transform: capitalize; color: #224B90;">Turnover cost</span>
                         <span class="subpages-container-product darkblue-span" style="text-align: center; font-size: 12px; margin-left: -0.5em; margin-top: 0.25em; color: #224B90;">{total_cost_voluntary}</span>
@@ -166,6 +166,7 @@ with col3:
     
     st.write(
         f"""
+        <br>
         <div class="base-wrapper" style="background-color: orange; opacity: 0.1; border-radius: 0.5rem;
         border-top: 2.5px solid #224B90; border-bottom: 2.5px solid #224B90;
         border-left: 2.5px solid #224B90; border-right: 2.5px solid #224B90;
