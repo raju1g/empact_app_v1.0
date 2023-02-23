@@ -290,16 +290,17 @@ st.write(
     """, unsafe_allow_html=True,
     )
 st.title("Observations")
-st.write(
-    """1. Involuntary reasons account for more than 50% of total turnovers in women
-       2. 60% of this involuntary turnover in women is performance related costing the company (i.e., 40% of the total turnover cost) and 30% due to conflict with company personnel
-       3. Women without benefits get turned over (voluntarily as well as involuntarily) after 2 years (much lower than the sample average)
-    """
+st.markdown(
+"""
+- Involuntary reasons account for more than 50% of total turnovers in women
+- 60% of this involuntary turnover in women is performance related costing the company (i.e., 40% of the total turnover cost) and 30% due to conflict with company personnel
+- Women without benefits get turned over (voluntarily as well as involuntarily) after 2 years (much lower than the sample average)
+"""
 )
 st.title("Recommendations")
-st.write(
+st.markdown(
     """In order to significantly reduce the turnover cost to the company, we recommend the following points:
-       1. To reduce the high turnover due to conflict with colleagues and managers, the onboarding and integration process needs to be thoroughly reviewed. 
-       2. Better coaching and training programs need to be implemented to reduce performance related turnover in both men and women. 
+       - To reduce the high turnover due to conflict with colleagues and managers, the onboarding and integration process needs to be thoroughly reviewed. 
+       - Better coaching and training programs need to be implemented to reduce performance related turnover in both men and women. 
     """
 )
