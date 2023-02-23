@@ -133,7 +133,12 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 
 df = pd.read_csv("datasets/penguins.csv")
 filtered_df = filter_dataframe(df)
-total_cost = filtered_df['cost'].aggregate('sum')
+cohort1 = filtered_df[filtered_df['type'] == "voluntary"]
+voluntary_x_median = cohort1['years_tenure'].median()
+total_cost_voluntary = cohort1['cost'].aggregate('sum')
+cohort2 = filtered_df[filtered_df['type'] != "voluntary"]
+involuntary_x_median = cohort2['years_tenure'].median()
+total_cost_involuntary = cohort2['cost'].aggregate('sum')
 
 col1, col2, col3, col4 = st.columns([0.1, 1, 1, 0.1])
 with col2:
@@ -141,17 +146,16 @@ with col2:
 with col3:
     st.write(
         f"""
-        <br>
         <div class="base-wrapper" style="background-color: lightblue; opacity: 0.1; border-radius: 0.5rem;
         border-top: 2.5px solid #224B90; border-bottom: 2.5px solid #224B90;
         border-left: 2.5px solid #224B90; border-right: 2.5px solid #224B90;
         background-repeat: no-repeat;
         opacity: 0.8; background-size: 80px;">
             <div class="hero-wrapper">
-                <div class="hero-container" style="width: 500px; height: 350px;">
+                <div class="hero-container" style="width: 100px; height: 50px;">
                     <div class="hero-container-content">
-                        <span class="subpages-container-product darkblue-span" style="text-align: right; font-size: 18px; margin-left: -2.5em; margin-top: 2.5em; line-height: 30px; text-transform: capitalize; color: white;">Turnover cost</span>
-                        <span class="subpages-container-product darkblue-span" style="text-align: right; font-size: 12px; margin-left: -0.5em; margin-top: 0.25em; color: white;">{total_cost}</span>
+                        <span class="subpages-container-product darkblue-span" style="text-align: center; font-size: 18px; margin-left: -2.5em; margin-top: 2.5em; line-height: 30px; text-transform: capitalize; color: white;">Turnover cost</span>
+                        <span class="subpages-container-product darkblue-span" style="text-align: center; font-size: 12px; margin-left: -0.5em; margin-top: 0.25em; color: white;">{total_cost}</span>
                     </div>
                 </div>
             </div>
@@ -168,10 +172,6 @@ with cols2:
 
     ## Employees with coaching
 
-    cohort1 = filtered_df[filtered_df['type'] == "voluntary"]
-    voluntary_x_median = cohort1['years_tenure'].median()
-
-
     kmf.fit(durations=cohort1["years_tenure"],
             event_observed=cohort1["event"],
             label='Voluntary turnover')
@@ -179,9 +179,6 @@ with cols2:
     kmf.plot_survival_function(ax=ax, ci_show=False)
 
     ## Employees without coaching
-
-    cohort2 = filtered_df[filtered_df['type'] != "voluntary"]
-    involuntary_x_median = cohort2['years_tenure'].median()
 
     kmf.fit(durations=cohort2["years_tenure"],
             event_observed=cohort2["event"],
