@@ -140,7 +140,7 @@ cohort2 = filtered_df[filtered_df['type'] != "voluntary"]
 involuntary_x_median = cohort2['years_tenure'].median()
 total_cost_involuntary = cohort2['cost'].aggregate('sum')
 
-col1, col2, col3, col4 = st.columns([0.1, 1, 0.5, 0.1])
+col1, col2, col3, col4 = st.columns([0.1, 1, 1, 0.1])
 with col2:
     st.dataframe(filtered_df)
 with col3:
@@ -154,7 +154,7 @@ with col3:
             <div class="hero-wrapper">
                 <div class="hero-container" style="width: 50px; height: 50px;">
                     <div class="hero-container-content">
-                        <span class="subpages-container-product darkblue-span" style="text-align: centre; font-size: 18px; margin-left: -2.5em; margin-top: 0.5em; line-height: 30px; text-transform: capitalize; color: #224B90;">Cost (€) {total_cost_voluntary}</span>
+                        <span class="subpages-container-product darkblue-span" style="text-align: center; font-size: 18px; margin-left: -2.5em; margin-top: 0.5em; line-height: 30px; text-transform: capitalize; color: #224B90;">Cost (€) {total_cost_voluntary}</span>
                     </div>
                 </div>
             </div>
@@ -174,7 +174,7 @@ with col3:
             <div class="hero-wrapper">
                 <div class="hero-container" style="width: 50px; height: 50px;">
                     <div class="hero-container-content">
-                        <span class="subpages-container-product darkblue-span" style="text-align: centre; font-size: 18px; margin-top: 0.5em; line-height: 30px; text-transform: capitalize; color: #224B90;">Cost (€) {total_cost_involuntary}</span>
+                        <span class="subpages-container-product darkblue-span" style="text-align: center; font-size: 18px; margin-top: 0.5em; line-height: 30px; text-transform: capitalize; color: #224B90;">Cost (€) {total_cost_involuntary}</span>
                     </div>
                 </div>
             </div>
