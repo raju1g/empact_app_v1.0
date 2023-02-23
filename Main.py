@@ -283,3 +283,23 @@ with cols3:
     figure_1.update_xaxes(tickfont_size=10, showgrid=False)
     figure_1.update_yaxes(showticklabels=False, showgrid=False)
     st.plotly_chart(figure_1, use_container_width=True, config=config)
+
+st.write(
+    f"""
+    <br><br>
+    """, unsafe_allow_html=True,
+    )
+st.title("Observations")
+st.write(
+    """1. Involuntary reasons account for more than 50% of total turnovers in women
+       2. 60% of this involuntary turnover in women is performance related costing the company (i.e., 40% of the total turnover cost) and 30% due to conflict with company personnel
+       3. Women without benefits get turned over (voluntarily as well as involuntarily) after 2 years (much lower than the sample average)
+    """
+)
+st.title("Recommendations")
+st.write(
+    """In order to significantly reduce the turnover cost to the company, we recommend the following points:
+       1. To reduce the high turnover due to conflict with colleagues and managers, the onboarding and integration process needs to be thoroughly reviewed. 
+       2. Better coaching and training programs need to be implemented to reduce performance related turnover in both men and women. 
+    """
+)
