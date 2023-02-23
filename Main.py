@@ -141,7 +141,7 @@ fig, ax = plt.subplots(figsize=(10, 5), dpi=500)
 ## Employees with coaching
 
 cohort1 = filtered_df[filtered_df['type'] == "voluntary"]
-voluntary_x_median = cohort1['years_tenure'].mean()
+voluntary_x_median = cohort1['years_tenure'].median()
 
 
 kmf.fit(durations=cohort1["years_tenure"],
