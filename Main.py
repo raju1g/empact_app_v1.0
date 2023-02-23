@@ -136,7 +136,7 @@ filtered_df = filter_dataframe(df)
 
 col1, col2, col3, col4 = st.columns([0.1, 1, 1, 0.1])
 with col2:
-    st.write(filtered_df)
+    st.dataframe(filtered_df)
 
 
 cols1, cols2, cols3, cols4 = st.columns([0.1, 1, 1, 0.1])
