@@ -188,6 +188,11 @@ with col3:
 
 cols1, cols2, cols3, cols4 = st.columns([0.1, 1, 1, 0.1])
 with cols2:
+    st.write(
+    f"""
+    <br>
+    """, unsafe_allow_html=True,
+    )
     kmf = KaplanMeierFitter()
     fig, ax = plt.subplots(figsize=(10, 5), dpi=500)
 
