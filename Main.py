@@ -83,9 +83,9 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
             df[col] = df[col].dt.tz_localize(None)
     
     col1, col2, col3 = st.columns([1, 1, 1])
-    modification_container = st.container()
-    
     with col2:
+        modification_container = st.container()
+       
         with modification_container:
             to_filter_columns = st.multiselect("Filter dataframe on", df.columns)
             for column in to_filter_columns:
