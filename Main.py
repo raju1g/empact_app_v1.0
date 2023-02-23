@@ -12,6 +12,7 @@ from lifelines import KaplanMeierFitter
 import matplotlib.pyplot as plt
 import seaborn as sns
 import utils
+import plotly.express as px
 
 from pandas.api.types import (
     is_categorical_dtype,
