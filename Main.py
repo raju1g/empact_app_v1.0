@@ -225,9 +225,5 @@ with cols2:
     fig
 
 with cols3:
-    fig1, ax = filtered_df.reason.value_counts().plot(kind='bar')
-    ax.set_ylabel("frequency")
-    for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] +
-                 ax.get_xticklabels() + ax.get_yticklabels()):
-        item.set_fontsize(10)
+    fig1 = px.histogram(filtered_df, x="reason")
     fig1
