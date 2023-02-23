@@ -82,102 +82,104 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
         if is_datetime64_any_dtype(df[col]):
             df[col] = df[col].dt.tz_localize(None)
     
-    col1, col2, col3 = st.columns([1, 1, 1])
-    with col2:
-        modification_container = st.container()
-       
-        with modification_container:
-            to_filter_columns = st.multiselect("Filter dataframe on", df.columns)
-            for column in to_filter_columns:
-                left, right = st.columns((1, 20))
-                # Treat columns with < 10 unique values as categorical
-                if is_categorical_dtype(df[column]) or df[column].nunique() < 10:
-                    user_cat_input = right.multiselect(
-                        f"Values for {column}",
-                        df[column].unique(),
-                        default=list(df[column].unique()),
-                    )
-                    df = df[df[column].isin(user_cat_input)]
-                elif is_numeric_dtype(df[column]):
-                    _min = float(df[column].min())
-                    _max = float(df[column].max())
-                    step = (_max - _min) / 100
-                    user_num_input = right.slider(
-                        f"Values for {column}",
-                        min_value=_min,
-                        max_value=_max,
-                        value=(_min, _max),
-                        step=step,
-                    )
-                    df = df[df[column].between(*user_num_input)]
-                elif is_datetime64_any_dtype(df[column]):
-                    user_date_input = right.date_input(
-                        f"Values for {column}",
-                        value=(
-                            df[column].min(),
-                            df[column].max(),
-                        ),
-                    )
-                    if len(user_date_input) == 2:
-                        user_date_input = tuple(map(pd.to_datetime, user_date_input))
-                        start_date, end_date = user_date_input
-                        df = df.loc[df[column].between(start_date, end_date)]
-                else:
-                    user_text_input = right.text_input(
-                        f"Substring or regex in {column}",
-                    )
-                    if user_text_input:
-                        df = df[df[column].astype(str).str.contains(user_text_input)]
+    
+    modification_container = st.container()
+
+    with modification_container:
+        to_filter_columns = st.multiselect("Filter dataframe on", df.columns)
+        for column in to_filter_columns:
+            left, right = st.columns((1, 20))
+            # Treat columns with < 10 unique values as categorical
+            if is_categorical_dtype(df[column]) or df[column].nunique() < 10:
+                user_cat_input = right.multiselect(
+                    f"Values for {column}",
+                    df[column].unique(),
+                    default=list(df[column].unique()),
+                )
+                df = df[df[column].isin(user_cat_input)]
+            elif is_numeric_dtype(df[column]):
+                _min = float(df[column].min())
+                _max = float(df[column].max())
+                step = (_max - _min) / 100
+                user_num_input = right.slider(
+                    f"Values for {column}",
+                    min_value=_min,
+                    max_value=_max,
+                    value=(_min, _max),
+                    step=step,
+                )
+                df = df[df[column].between(*user_num_input)]
+            elif is_datetime64_any_dtype(df[column]):
+                user_date_input = right.date_input(
+                    f"Values for {column}",
+                    value=(
+                        df[column].min(),
+                        df[column].max(),
+                    ),
+                )
+                if len(user_date_input) == 2:
+                    user_date_input = tuple(map(pd.to_datetime, user_date_input))
+                    start_date, end_date = user_date_input
+                    df = df.loc[df[column].between(start_date, end_date)]
+            else:
+                user_text_input = right.text_input(
+                    f"Substring or regex in {column}",
+                )
+                if user_text_input:
+                    df = df[df[column].astype(str).str.contains(user_text_input)]
 
     return df
 #data_url = "https://raw.githubusercontent.com/raju1g/empact_app_v1.0/blob/main/"
 
 df = pd.read_csv("datasets/penguins.csv")
 filtered_df = filter_dataframe(df)
-st.dataframe(filtered_df)
+
+col1, col2, col3, col4 = st.columns([0.1, 1, 1, 0.1])
+with col2:
+    st.dataframe(filtered_df)
+
+with col3:
+    kmf = KaplanMeierFitter()
+    fig, ax = plt.subplots(figsize=(10, 5), dpi=500)
+
+    ## Employees with coaching
+
+    cohort1 = filtered_df[filtered_df['type'] == "voluntary"]
+    voluntary_x_median = cohort1['years_tenure'].median()
 
 
-kmf = KaplanMeierFitter()
-fig, ax = plt.subplots(figsize=(10, 5), dpi=500)
+    kmf.fit(durations=cohort1["years_tenure"],
+            event_observed=cohort1["event"],
+            label='Voluntary turnover')
 
-## Employees with coaching
+    kmf.plot_survival_function(ax=ax, ci_show=False)
 
-cohort1 = filtered_df[filtered_df['type'] == "voluntary"]
-voluntary_x_median = cohort1['years_tenure'].median()
+    ## Employees without coaching
 
+    cohort2 = filtered_df[filtered_df['type'] != "voluntary"]
+    involuntary_x_median = cohort2['years_tenure'].median()
 
-kmf.fit(durations=cohort1["years_tenure"],
-        event_observed=cohort1["event"],
-        label='Voluntary turnover')
+    kmf.fit(durations=cohort2["years_tenure"],
+            event_observed=cohort2["event"],
+            label='Involuntary turnover')
 
-kmf.plot_survival_function(ax=ax, ci_show=False)
+    ## Adding a few details to the plot
 
-## Employees without coaching
+    kmf.plot_survival_function(ax=ax, ci_show=False)
 
-cohort2 = filtered_df[filtered_df['type'] != "voluntary"]
-involuntary_x_median = cohort2['years_tenure'].median()
+    ax.set_ylabel("Employee survival rate")
+    ax.set_xlabel("Timeline - years")
 
-kmf.fit(durations=cohort2["years_tenure"],
-        event_observed=cohort2["event"],
-        label='Involuntary turnover')
+    plt.text(8.5, 0.8, '-- 50% voluntary turnover', size=9, color='lightblue')
+    #plt.text(8, 0.66, 'after {0:.2f}.format(voluntary_x_median) years', size=10, color='lightblue')
+    plt.text(8.5, 0.76, '-- 50% involuntary turnover', size=9, color='orange')
+    #plt.text(8, 0.46, 'after {0:.2f}.format(involuntary_x_median) years', size=10, color='orange')
+    plt.axvline(x=voluntary_x_median, color='lightblue', linestyle='--')
+    plt.axvline(x=involuntary_x_median, color='orange', linestyle='--')
 
-## Adding a few details to the plot
+    plt.legend(fontsize=9)
 
-kmf.plot_survival_function(ax=ax, ci_show=False)
-
-ax.set_ylabel("Employee survival rate")
-ax.set_xlabel("Timeline - years")
-
-plt.text(8.5, 0.8, '-- 50% voluntary turnover', size=9, color='lightblue')
-#plt.text(8, 0.66, 'after {0:.2f}.format(voluntary_x_median) years', size=10, color='lightblue')
-plt.text(8.5, 0.76, '-- 50% involuntary turnover', size=9, color='orange')
-#plt.text(8, 0.46, 'after {0:.2f}.format(involuntary_x_median) years', size=10, color='orange')
-plt.axvline(x=voluntary_x_median, color='lightblue', linestyle='--')
-plt.axvline(x=involuntary_x_median, color='orange', linestyle='--')
-
-plt.legend(fontsize=9)
-
-for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] +
-             ax.get_xticklabels() + ax.get_yticklabels()):
-    item.set_fontsize(10)
-fig
+    for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] +
+                 ax.get_xticklabels() + ax.get_yticklabels()):
+        item.set_fontsize(10)
+    fig
