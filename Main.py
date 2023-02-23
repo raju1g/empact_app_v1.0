@@ -136,7 +136,7 @@ filtered_df = filter_dataframe(df)
 
 col1, col2, col3, col4 = st.columns([0.1, 1, 1, 0.1])
 with col2:
-    st.dataframe(filtered_df, 200, 100, filtered_df.style.highlight_max(axis=0))
+    st.dataframe(filtered_df, 200, 100)
 
 
 cols1, cols2, cols3, cols4 = st.columns([0.1, 1, 1, 0.1])
