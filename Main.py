@@ -227,7 +227,13 @@ with cols2:
     fig
 
 with cols3:
-   
+    config = {
+            'scrollZoom': False,
+            'displayModeBar': False,
+            'editable': False,
+            'showLink': False,
+            'displaylogo': False,
+        }
     figure_1 = px.histogram(filtered_df, x="reason")
     
     figure_1.update_layout(showlegend=False)
